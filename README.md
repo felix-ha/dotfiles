@@ -1,21 +1,16 @@
+# dotfiles
 
-
-## Setup zsh in wsl
+## Setup 
 
 ```zsh
-sudo apt install zsh -y
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-```
-
-make smbolic link
-```zsh
-ln -s ~/.dotfiles/.zshrc ~/.zshrc
+git clone https://github.com/felix-ha/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
 ```
 
 ```zsh
-ln -s ~/.dotfiles/init.vim ~/.config/nvim/init.vim
+chmod +x init.sh
 ```
 
-
-
-
+```zsh
+./init.sh
+```
