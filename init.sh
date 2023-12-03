@@ -15,3 +15,7 @@ mv squashfs-root /
 ln -s /squashfs-root/AppRun /usr/bin/nvim
 mkdir ~/.config
 ln -s ~/.dotfiles/nvim ~/.config/nvim
+
+alias vim="nvim"
+alias vi="nvim"
+alias v="nvim"
