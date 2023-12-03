@@ -5,3 +5,4 @@ require "lazy-config"
 require('lualine').setup()
 require('nvim-tree').setup()
 require('telescope').setup()
+require('nvim-web-devicons').setup()
