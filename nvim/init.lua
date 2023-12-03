@@ -1,6 +1,2 @@
-vim.opt.number = true
-
-vim.opt.termguicolors = true
-vim.cmd 'colorscheme desert'
-
+require "options"
 require "lazy-config"
