@@ -6,3 +6,4 @@ opt.mouse = "a"
 opt.termguicolors = true
 opt.tabstop = 4
 
+vim.cmd.colorscheme "catppuccin"
