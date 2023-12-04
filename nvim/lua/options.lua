@@ -10,4 +10,4 @@ opt.splitbelow = true
 opt.splitright = true
 opt.cursorline = true
 
-vim.cmd [[set iskeywords+=-]]
+vim.cmd [[set iskeyword+=-]]
