@@ -1,3 +1,5 @@
+git clone https://github.com/felix-ha/dotfiles.git ~/.dotfiles
+
 apt update
 
 # zsh
