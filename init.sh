@@ -21,5 +21,4 @@ alias vi="nvim"
 alias v="nvim"
 
 
-mkdir -p ~/.local/share/fonts
-cd ~/.local/share/fonts && curl -fLO https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/DroidSansMono/DroidSansMNerdFont-Regular.otf
+bash -c  "$(curl -fsSL https://raw.githubusercontent.com/officialrajdeepsingh/nerd-fonts-installer/main/install.sh JetBrainsMono)" 
