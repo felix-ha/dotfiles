@@ -3,9 +3,9 @@ git clone https://github.com/felix-ha/dotfiles.git ~/.dotfiles
 apt update
 
 # zsh
-apt install zsh -y
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-ln -s -f ~/.dotfiles/.zshrc ~/.zshrc
+# apt install zsh -y
+# sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+# ln -s -f ~/.dotfiles/.zshrc ~/.zshrc
 
 # neovim
 # apt install neovim -y
