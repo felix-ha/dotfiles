@@ -21,6 +21,3 @@ ln -s ~/.dotfiles/nvim ~/.config/nvim
 alias vim="nvim"
 alias vi="nvim"
 alias v="nvim"
-
-
-bash -c  "$(curl -fsSL https://raw.githubusercontent.com/officialrajdeepsingh/nerd-fonts-installer/main/install.sh JetBrainsMono)" 
