@@ -3,9 +3,10 @@ git clone https://github.com/felix-ha/dotfiles.git ~/.dotfiles
 apt update
 
 # zsh
-# apt install zsh -y
-# sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-# ln -s -f ~/.dotfiles/.zshrc ~/.zshrc
+apt install zsh -y
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+ln -s -f ~/.dotfiles/.zshrc ~/.zshrc
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
 # neovim
 # apt install neovim -y
@@ -17,7 +18,3 @@ mv squashfs-root /
 ln -s /squashfs-root/AppRun /usr/bin/nvim
 mkdir ~/.config
 ln -s ~/.dotfiles/nvim ~/.config/nvim
-
-alias vim="nvim"
-alias vi="nvim"
-alias v="nvim"
