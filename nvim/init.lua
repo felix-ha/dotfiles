@@ -1,8 +1,8 @@
-require "keymaps"
-require "options"
-require "lazy-config"
+require "user.keymaps"
+require "user.options"
+require "user.lazy-config"
 
-require('lualine').setup()
-require('nvim-tree').setup()
-require('telescope').setup()
-require('nvim-web-devicons').setup()
+require('user.lualine').setup()
+require('user.nvim-tree').setup()
+require('user.telescope').setup()
+require('user.nvim-web-devicons').setup()
