@@ -5,13 +5,6 @@ local servers = {
 	"jsonls",
 }
 
-local registry = require("mason-registry")
-registry.refresh(function ()
-     registry.get_package("lua-language-server")
-	 registry.get_package("pyright")
-	 registry.get_package("jsonls")
-end)  
-
 local settings = {
 	ui = {
 		border = "none",
