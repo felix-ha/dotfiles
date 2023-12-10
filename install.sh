@@ -4,7 +4,7 @@ apt update
 
 # neovim
 # apt install neovim -y
-apt install libfuse2 ripgrep -y
+apt install libfuse2 ripgrep fd-find -y
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
 chmod u+x nvim.appimage
 ./nvim.appimage --appimage-extract
