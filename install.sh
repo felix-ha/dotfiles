@@ -11,7 +11,7 @@ chmod u+x nvim.appimage
 mv squashfs-root /
 ln -s /squashfs-root/AppRun /usr/bin/nvim
 
-if [[ -d "~/.config" ]]; then
+if [[ -d ~/.config ]]; then
     echo "~/.config exists"
 else
     echo "creating dir ~/.config"
