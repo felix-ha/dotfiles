@@ -12,6 +12,16 @@ return {
     require("dapui").setup()
     require("dap-python").setup() -- install debugpy into venv
 
+    dap.configurations.python = {
+      {
+        justMyCode = false,
+        type = "python",
+        request = "launch",
+        name = "launch file",
+        program = "${file}",
+      },
+    }
+
     dap.listeners.before.attach.dapui_config = function()
       dapui.open()
     end
