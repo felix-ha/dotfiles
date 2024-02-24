@@ -34,6 +34,9 @@ keymap("n", "<F5>", string.format("<cmd>TermExec cmd='%s' direction=float<cr>", 
 keymap("n", "<leader>ff", "<cmd>Telescope find_files<cr>", opts)
 keymap("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", opts)
 
+-- Navbuddy --
+keymap("n", "<leader>n", "<cmd>Navbuddy<cr>", opts)
+
 -- debugging --
 vim.keymap.set("n", "<Leader>dc", function()
   require("dap").continue()
