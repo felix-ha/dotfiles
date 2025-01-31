@@ -22,3 +22,5 @@ else
 fi
 
 ln -s ~/.dotfiles/nvim ~/.config/nvim
+
+echo 'alias v="nvim"' >> ~/.bashrc
