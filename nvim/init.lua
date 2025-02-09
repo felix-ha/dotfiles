@@ -42,12 +42,19 @@ vim.opt.clipboard = "unnamedplus"
 
 vim.keymap.set("i", "jk", "<ESC>")
 
+vim.keymap.set("n", "<C-h>", "<C-w>h")
+vim.keymap.set("n", "<C-j>", "<C-w>j")
+vim.keymap.set("n", "<C-k>", "<C-w>k")
+vim.keymap.set("n", "<C-l>", "<C-w>l")
+
 vim.keymap.set("n", "<space><space>x", "<cmd>source %<CR>") -- run whole file
 vim.keymap.set("n", "<space>x", ":.lua<CR>") -- run line
 vim.keymap.set("v", "<space>x", ":lua<CR>") -- run selection
 
 vim.keymap.set("n", "<leader>v", "<cmd>:vsplit<cr>", { desc="Vertical split" })
 vim.keymap.set("n", "<leader>h", "<cmd>:split<cr>", { desc="Horizontal split" })
+
+vim.keymap.set("n", "<leader>z", "<cmd>ZenMode<cr>", { desc="Toggle ZenMode" })
 
 -- ToggleTerm --
 vim.keymap.set("n", "<leader>t", "<cmd>ToggleTerm direction=float dir=git_dir<cr>", { desc="Toggle [t]erminal" })
