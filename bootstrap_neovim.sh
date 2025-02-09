@@ -12,7 +12,7 @@ rm -rf neovim
 
 git clone https://github.com/felix-ha/dotfiles.git ~/.dotfiles
 
-apt install g++ ripgrep -y
+apt install g++ ripgrep fd-find -y
 
 [[ -d ~/.config ]] || mkdir ~/.config
 ln -s ~/.dotfiles/nvim ~/.config/nvim
