@@ -39,7 +39,7 @@ local live_multigrep = function(opts)
 
   pickers.new(opts, {
     debounce = 100,
-    prompt_title = "Multi Grep",
+    prompt_title = "Multi grep w filter for files (double space)",
     finder = finder,
     previewer = conf.grep_previewer(opts),
     sorter = require("telescope.sorters").empty(),
@@ -47,7 +47,7 @@ local live_multigrep = function(opts)
 end
 
 M.setup = function()
-  vim.keymap.set("n", "<Leader>fm", live_multigrep)
+  vim.keymap.set("n", "<Leader>fg", live_multigrep, { desc = "Find snippet" })
 end
 
 return M
