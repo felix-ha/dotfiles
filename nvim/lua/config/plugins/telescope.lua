@@ -49,6 +49,7 @@ return {
 	local function custom_commands()
 	local commands = get_just_recipes()
  	table.insert(commands, { name = "Run pytest", cmd = "pytest ." })
+ 	table.insert(commands, { name = "Git log", cmd = "git log -n 10 --graph --abbrev-commit --decorate" })
 	    -- { name = "Start server", cmd = "npm start" },
 	    -- Add your commands
 	  -- }

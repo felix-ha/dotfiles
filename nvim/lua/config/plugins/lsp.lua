@@ -24,7 +24,8 @@
 	},
     },
     config = function()
-        require("lspconfig").lua_ls.setup {}
+	local capabilities = require('blink.cmp').get_lsp_capabilities()
+        require("lspconfig").lua_ls.setup { capabilities = capabilities}
 
 	-- python with hardcodec venv
         -- local home = os.getenv("HOME")
@@ -76,6 +77,8 @@
 	    end, vim.tbl_extend('force', opts, { desc = "List all call sites" }))
 
 	vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, vim.tbl_extend('force', opts, { desc = "Rename symbol" }))
+
+	vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, vim.tbl_extend('force', opts, { desc = "Code actions" }))
 
 
 	end,

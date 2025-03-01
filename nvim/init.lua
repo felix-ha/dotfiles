@@ -79,14 +79,26 @@ vim.keymap.set({ 'n', 'v' }, "<leader>G", ":Gen<CR>",
 vim.keymap.set({ 'n', 'v' }, "<leader>C", ":Gen Chat<CR>",
     with_opts({ desc = "Gen Chat" }))
 
-local terminal_cmd = os.getenv("TERMINAL_CMD") or "ls -lisah"
-vim.keymap.set("n", "<F5>",
-    string.format("<cmd>TermExec cmd='%s' direction=float<cr>", terminal_cmd),
-    with_opts({ desc = "Execute TERMINAL_CMD" })
-)
+-- local terminal_cmd = os.getenv("TERMINAL_CMD") or "ls -lisah"
+-- vim.keymap.set("n", "<F5>",
+--     string.format("<cmd>TermExec cmd='%s' direction=float<cr>", terminal_cmd),
+--     with_opts({ desc = "Execute TERMINAL_CMD" })
+-- )
+--
+--
 vim.keymap.set("n", "<F1>",
     string.format("<cmd>TermExec cmd='%s' direction=float<cr>", "source $HOME/venvs/py311/bin/activate"),
     with_opts({ desc = "Active poetry py311 venv" })
+)
+
+vim.keymap.set("n", "<F5>",
+    string.format("<cmd>TermExec cmd='%s' direction=float<cr>", "pytest tests/services/test_topic_service.py"),
+    with_opts({ desc = "Run test" })
+)
+
+vim.keymap.set("n", "<Leader>e",
+    string.format("<cmd>TermExec cmd='%s' direction=float<cr>", "pytest tests/data_collection/test_labelstudio.py"),
+    with_opts({ desc = "Execute command" })
 )
 
 vim.keymap.set("n", "<Leader>dc", function()
