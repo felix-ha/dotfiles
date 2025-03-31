@@ -1,3 +1,6 @@
+
+local f5 = "pytest -s tests/retriever/test_milvus_retriever.py"
+
 _G.get_poetry_venv = function()
     local handle = io.popen('poetry env info --path 2>/dev/null')
     if handle then
@@ -92,8 +95,8 @@ vim.keymap.set("n", "<F1>",
 )
 
 vim.keymap.set("n", "<F5>",
-    string.format("<cmd>TermExec cmd='%s' direction=float<cr>", "pytest tests/services/test_topic_service.py"),
-    with_opts({ desc = "Run test" })
+    string.format("<cmd>TermExec cmd='%s' direction=float<cr>", f5),
+    with_opts({ desc = f5 })
 )
 
 vim.keymap.set("n", "<Leader>e",
