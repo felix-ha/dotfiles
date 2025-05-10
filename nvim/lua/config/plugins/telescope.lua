@@ -108,7 +108,8 @@ return {
 	  }
 	end, { desc = "Find in plugins directory" })
 
-	vim.keymap.set('n', '<leader>fk', '<cmd>Telescope keymaps<cr>', { desc = "Find keymaps" })
+	vim.keymap.set('n', '<Leader>fk', '<cmd>Telescope keymaps<cr>', { desc = "Find keymaps" })
+	vim.keymap.set('n', '<Leader>fb', '<cmd>Telescope buffers<cr>', { desc = 'Find buffers' })
 
       require "config.telescope.multigrep".setup()
     end

@@ -52,6 +52,7 @@
        --      end
        --      return nil
        --  end
+       --
 	require("lspconfig").pyright.setup {
 	on_attach = function(_, bufnr)
          local opts = { buffer = bufnr, silent = true, noremap = true }
@@ -83,7 +84,7 @@
 
 	end,
           on_new_config = function(new_config)
-              local venv_path = get_poetry_venv()
+              local venv_path = get_venv()
               if venv_path then
                   new_config.cmd = { venv_path .. "/bin/pyright-langserver", "--stdio" }
                   new_config.settings = {

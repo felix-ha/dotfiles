@@ -1,32 +1,40 @@
+# to use different config, for example:  alias v="NVIM_APPNAME=custom nvim"
 
-local f5 = "pytest -s tests/retriever/test_milvus_retriever.py"
+local f5 = "ls -a"
+local command_e = "uv --help"
 
-_G.get_poetry_venv = function()
-    local handle = io.popen('poetry env info --path 2>/dev/null')
-    if handle then
-        local result = handle:read("*a")
-        handle:close()
-        return result:gsub("^%s*(.-)%s*$", "%1")
-    end
-    return nil
+_G.get_venv = function()
+    return ".venv"
 end
 
-local function activate_poetry_venv()
-    local venv = get_poetry_venv()
-    if venv then
-        vim.g.python3_host_prog = venv .. '/bin/python'
-        require('toggleterm').setup({
-            on_open = function(term)
-                if not term.venv_activated then
-                    local venv_activate = venv .. '/bin/activate'
-                    term:send('source ' .. venv_activate .. '\n')
-                    term.venv_activated = true
-                end
-            end
-        })
-    end
-end
+-- _G.get_poetry_venv = function()
+--     local handle = io.popen('poetry env info --path 2>/dev/null')
+--     if handle then
+--         local result = handle:read("*a")
+--         handle:close()
+--         return result:gsub("^%s*(.-)%s*$", "%1")
+--     end
+--     return nil
+-- end
 
+-- local function activate_poetry_venv()
+--     -- local venv = get_poetry_venv()
+--     local venv = ".venv"
+--     if venv then
+--         vim.g.python3_host_prog = venv .. '/bin/python'
+--         require('toggleterm').setup({
+--             on_open = function(term)
+--                 if not term.venv_activated then
+--                     local venv_activate = venv .. '/bin/activate'
+--                     term:send('source ' .. venv_activate .. '\n')
+--                     term.venv_activated = true
+--                 end
+--             end
+--         })
+--     end
+-- end
+
+-- activate_poetry_venv()
 
 vim.fn.sign_define('DapBreakpoint', {text='🛑', texthl='', linehl='', numhl=''})
 vim.fn.sign_define('DapStopped',{ text ='▶️', texthl ='', linehl ='', numhl =''})
@@ -36,12 +44,11 @@ vim.g.maplocalleader = " "
 
 require("config.lazy")
 
-activate_poetry_venv()
-
 vim.opt.number = true
-vim.opt.relativenumber = false
+vim.opt.relativenumber = true
 vim.opt.shiftwidth = 4
 vim.opt.clipboard = "unnamedplus"
+vim.opt.cursorline = true
 
 vim.keymap.set("i", "jk", "<ESC>")
 
@@ -58,6 +65,8 @@ vim.keymap.set("n", "<leader>v", "<cmd>:vsplit<cr>", { desc="Vertical split" })
 vim.keymap.set("n", "<leader>h", "<cmd>:split<cr>", { desc="Horizontal split" })
 
 vim.keymap.set("n", "<leader>z", "<cmd>ZenMode<cr>", { desc="Toggle ZenMode" })
+
+local harpoon_utils = require("custom.harpoon_utils")
 
 -- ToggleTerm --
 vim.keymap.set("n", "<leader>t", "<cmd>ToggleTerm direction=float dir=git_dir<cr>", { desc="Toggle [t]erminal" })
@@ -76,11 +85,40 @@ vim.keymap.set("v", "<leader>Tv", "<cmd>ToggleTermSendVisualLines<cr>",
 vim.keymap.set("v", "<leader>TV", "<cmd>ToggleTermSendVisualSelection<cr>",
     with_opts({ desc = "Send visual selection to terminal" }))
 
-vim.keymap.set({ 'n', 'v' }, "<leader>G", ":Gen<CR>",
-    with_opts({ desc = "Gen" }))
 
-vim.keymap.set({ 'n', 'v' }, "<leader>C", ":Gen Chat<CR>",
-    with_opts({ desc = "Gen Chat" }))
+vim.keymap.set({ 'n', 'v' }, "<leader>gc", ":Gen Chat<CR>",
+    with_opts({ desc = "Gen Chat - continues chat or starts plain conversation." }))
+
+vim.keymap.set({ 'n', 'v' }, "<leader>ga", ":Gen Ask<CR>",
+    with_opts({ desc = "Gen Ask - with context" }))
+
+vim.keymap.set({ 'n', 'v' }, "<leader>gr", ":Gen Review_Code<CR>",
+    with_opts({ desc = "Gen Review Code" }))
+
+vim.keymap.set({ 'n', 'v' }, "<leader>gt", ":Gen Write_Tests<CR>",
+    with_opts({ desc = "Gen Write_Tests" }))
+
+vim.keymap.set({ 'n', 'v' }, "<leader>ge", ":Gen Enhance_Code<CR>",
+    with_opts({ desc = "Gen Enhance Code - replace" }))
+
+vim.keymap.set({ 'n', 'v' }, "<leader>gf", ":Gen Change_Code<CR>",
+    with_opts({ desc = "Gen Change_Code - fix code - replace" }))
+
+vim.keymap.set({ 'n', 'v' }, "<leader>gy", ":Gen Ask_Yanked<CR>",
+    with_opts({ desc = "Gen Ask_Yanked" }))
+
+vim.api.nvim_create_user_command("GenHarpoon", function()
+  harpoon_utils.yank_harpoon_files()
+  vim.cmd("Gen Ask_Harpoon")
+end, {})
+
+vim.keymap.set('n', '<leader>gh', "<cmd>GenHarpoon<CR>", { desc = "Generate from Harpoon files" })
+
+--
+-- vim.keymap.set("n", "<F1>",
+--     string.format("<cmd>TermExec cmd='%s' direction=float<cr>", "source $HOME/venvs/py311/bin/activate"),
+--     with_opts({ desc = "Active poetry py311 venv" })
+-- )
 
 -- local terminal_cmd = os.getenv("TERMINAL_CMD") or "ls -lisah"
 -- vim.keymap.set("n", "<F5>",
@@ -88,54 +126,15 @@ vim.keymap.set({ 'n', 'v' }, "<leader>C", ":Gen Chat<CR>",
 --     with_opts({ desc = "Execute TERMINAL_CMD" })
 -- )
 --
---
-vim.keymap.set("n", "<F1>",
-    string.format("<cmd>TermExec cmd='%s' direction=float<cr>", "source $HOME/venvs/py311/bin/activate"),
-    with_opts({ desc = "Active poetry py311 venv" })
-)
-
 vim.keymap.set("n", "<F5>",
     string.format("<cmd>TermExec cmd='%s' direction=float<cr>", f5),
     with_opts({ desc = f5 })
 )
 
 vim.keymap.set("n", "<Leader>e",
-    string.format("<cmd>TermExec cmd='%s' direction=float<cr>", "pytest tests/data_collection/test_labelstudio.py"),
-    with_opts({ desc = "Execute command" })
+    string.format("<cmd>TermExec cmd='%s' direction=float<cr>", command_e),
+    with_opts({ desc = command_e })
 )
-
-vim.keymap.set("n", "<Leader>dc", function()
-    require("dap").continue()
-end, { desc = "Debug: Continue execution" })
-
-vim.keymap.set("n", "<F9>", function()
-    require("dap").continue()
-end)
-
-vim.keymap.set("n", "<Leader>do", function()
-    require("dap").step_over()
-end, { desc = "Debug: Step over current line" })
-
-vim.keymap.set("n", "<Leader>di", function()
-    require("dap").step_into()
-end, { desc = "Debug: Step into function call" })
-
-vim.keymap.set("n", "<Leader>du", function()
-    require("dap").step_out()
-end, { desc = "Debug: Step out of current function" })
-
-vim.keymap.set("n", "<Leader>b", function()
-    require("dap").toggle_breakpoint()
-end, { desc = "Toggle breakpoint at line" })
-
-vim.keymap.set("n", "<Leader>B", function()
-    require("dap").set_breakpoint()
-end, { desc = "Set breakpoint with condition" })
-
-vim.keymap.set("n", "<Leader>dr", function()
-    require("dap").repl.open()
-end, { desc = "Debug: Open REPL" })
-
 
 -- oil
 vim.keymap.set("n", "<leader>o", "<cmd>Oil<cr>", opts)
@@ -153,3 +152,4 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 vim.api.nvim_set_hl(0, 'EyelinerPrimary', { fg='#FF0000', bold = true })
+
