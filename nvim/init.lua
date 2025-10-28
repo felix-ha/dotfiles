@@ -1,7 +1,6 @@
 # to use different config, for example:  alias v="NVIM_APPNAME=custom nvim"
 
 local f5 = "ls -a"
-local command_e = "uv --help"
 
 _G.get_venv = function()
     return ".venv"
@@ -68,9 +67,6 @@ vim.keymap.set("n", "<leader>z", "<cmd>ZenMode<cr>", { desc="Toggle ZenMode" })
 
 local harpoon_utils = require("custom.harpoon_utils")
 
--- ToggleTerm --
-vim.keymap.set("n", "<leader>t", "<cmd>ToggleTerm direction=float dir=git_dir<cr>", { desc="Toggle [t]erminal" })
-
 local opts = { noremap = true, silent = true }
 
 local function with_opts(additional_opts)
@@ -131,14 +127,43 @@ vim.keymap.set("n", "<F5>",
     with_opts({ desc = f5 })
 )
 
-vim.keymap.set("n", "<Leader>e",
-    string.format("<cmd>TermExec cmd='%s' direction=float<cr>", command_e),
-    with_opts({ desc = command_e })
-)
+-- ToggleTerm --
+vim.keymap.set("n", "<leader>t", "<cmd>1ToggleTerm direction=float dir=git_dir<cr>", { desc="Toggle [t]erminal" })
+
+local Terminal = require("toggleterm.terminal").Terminal
+local term1
+
+local function get_term1()
+  if term1 then return term1 end
+  term1 = Terminal:new({
+    id = 1,
+    direction = "float",
+    close_on_exit = false,
+    cmd = vim.env.SHELL or "bash",
+  })
+  return term1
+end
+
+vim.keymap.set("n", "<Leader>e", function()
+  local file_path = vim.fn.expand("%:p")
+  if file_path == "" then
+    vim.notify("Error: No file name. Save the buffer first.", vim.log.levels.ERROR)
+    return
+  end
+  if vim.fn.expand("%:e") ~= "hs" then
+    vim.notify("Not a Haskell file (.hs)", vim.log.levels.WARN)
+    return
+  end
+
+  local term = get_term1()
+  term:open()
+
+  local cmd = "/root/.ghcup/bin/runghc " .. vim.fn.shellescape(file_path)
+  term:send(cmd)
+end, { desc = "Run current Haskell file in terminal" })
 
 -- oil
 vim.keymap.set("n", "<leader>o", "<cmd>Oil<cr>", opts)
-
 
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
