@@ -13,6 +13,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     tmux \
     nodejs \
     npm \
+    luarocks \
     # ghcup
     build-essential \
     libffi-dev \
@@ -58,6 +59,8 @@ RUN set -e; \
     [[ -d ~/.config ]] || mkdir ~/.config; \
     ln -s ~/.dotfiles/nvim ~/.config/nvim; \
     echo 'alias v="nvim"' >> ~/.bashrc
+
+RUN nvim --headless "+Lazy! sync" +qa
 
 WORKDIR /
 
