@@ -1,35 +1,23 @@
-FROM ubuntu:24.04
+FROM ubuntu:24.04 AS builder
 
 SHELL ["/bin/bash", "-c"]
 
 ENV NVIM_VERSION="v0.10.4"
-ENV SHELL /bin/bash
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    # general
-    curl \
+    # Git to clone
     git \
-    vim \
-    tmux \
-    nodejs \
-    npm \
-    luarocks \
-    # ghcup
+    # Neovim build dependencies
     build-essential \
-    libffi-dev \
-    libffi8 \
-    libgmp-dev \
-    libgmp10 \
-    libncurses-dev \
-    pkg-config \
-    # neovim build from source
-    g++ \
-    ripgrep \
-    fd-find \
     cmake \
+    g++ \
     libtool-bin \
     gettext \
-    # Clean up apt cache
+    libffi-dev \
+    libgmp-dev \
+    libncurses-dev \
+    pkg-config \
+    # Clean up
     && rm -rf /var/lib/apt/lists/*
 
 RUN set -e; \
@@ -41,7 +29,37 @@ RUN set -e; \
     cd ..; \
     rm -rf neovim
 
-RUN curl --proto '=httpsS' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to /usr/local/bin
+FROM ubuntu:24.04
+
+SHELL ["/bin/bash", "-c"]
+
+ENV SHELL /bin/bash
+
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    # General tools
+    curl \
+    git \
+    vim \
+    tmux \
+    nodejs \
+    npm \
+    luarocks \
+    # Runtime libs for Neovim (installed by build-deps in stage 1)
+    libffi8 \
+    libgmp10 \
+    libncurses6 \
+    gettext \
+    # Neovim plugin dependencies
+    ripgrep \
+    fd-find \
+    # Clean up
+    && rm -rf /var/lib/apt/lists/*
+
+RUN ln -s $(which fdfind) /usr/local/bin/fd
+
+COPY --from=builder /usr/local /usr/local
+
+RUN curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to /usr/local/bin
 
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 
@@ -52,7 +70,7 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | \
     
 ENV PATH="/root/.ghcup/bin:$PATH"
 
-RUN npm i -g @openai/codex
+RUN npm i -g @openai/codex && npm cache clean --force
 
 RUN set -e; \
     git clone https://github.com/felix-ha/dotfiles.git ~/.dotfiles; \
@@ -62,7 +80,6 @@ RUN set -e; \
 
 RUN nvim --headless "+Lazy! sync" +qa
 
-WORKDIR /
+WORKDIR /host
 
 CMD ["/bin/bash"]
-
