@@ -49,6 +49,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     libgmp10 \
     libncurses6 \
     gettext \
+    zlib1g-dev \
     # Neovim plugin dependencies
     ripgrep \
     fd-find \
